@@ -16,7 +16,8 @@ benchmark "Tailscale" {
     control.tailscale_3,
     control.tailscale_4,
     control.tailscale_5,
-    control.tailscale_6
+    control.tailscale_6,
+    control.tailscale_7,
   ]
 
   tags = merge(local.tailscale_common_tags, {
@@ -63,20 +64,27 @@ control "tailscale_4" {
 control "tailscale_5" {
   title       = "5. Use groups in ACLs"
   description = "Use tags to manage devices. Tags allows to define access to devices based on purpose, rather than based on owner. ."
-  sql         = query.tailscale.sql
+  sql         = query.tailscale_use_groups_acl.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
 
 control "tailscale_6" {
-  title       = "6. Assign admin roles."
+  title       = "6. Assign admin roles"
   description = "Assign user roles for managing Tailscale as appropriate, based on job function and for separation of duties. Tailscale provides multiple user roles that restrict who can modify your tailnet’s configurations."
   sql         = query.tailscale_assign_admin_roles.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
 
 control "tailscale_7" {
-  title       = "7. Customize key expiration "
+  title       = "7. Customize key expiration"
   description = "Require users to rotate keys by re-authenticating their devices to the network regularly. Devices connect to your tailnet using a public key which expires automatically after a period of time, forcing keys to rotate."
+  sql         = query.tailscale_key_set_to_expire.sql
+  // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
+}
+
+control "tailscale_9" {
+  title       = "9. Use tags in ACLs"
+  description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
   sql         = query.tailscale_key_set_to_expire.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
