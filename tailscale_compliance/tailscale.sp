@@ -40,9 +40,9 @@ control "tailscale_1" {
 }
 
 control "tailscale_2" {
-  title       = "2. Enable MFA in your identity provider"
-  description = "Enable multi-factor authentication in your identity provider for authenticating to Tailscale, ideally using a hardware token."
-  sql         = query.tailscale.sql
+  title       = "2. Remove unused API keys"
+  description = "Regularly remove API keys that are no longer needed for your network.This prevents leaked keys being used to add unauthorized users or devices to your network."
+  sql         = query.tailscale_remove_unused_api_keys.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
 
@@ -78,5 +78,19 @@ control "tailscale_7" {
   title       = "7. Use groups in ACLs"
   description = "Use tags to manage devices. Tags allows to define access to devices based on purpose, rather than based on owner. ."
   sql         = query.tailscale.sql
+  // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
+}
+
+control "tailscale_6" {
+  title       = "6. "
+  description = "Enable multifactor authentication for all users who are members of administrative roles in the Microsoft 365 tenant."
+  sql         = query.tailscale.sql
+  // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
+}
+
+control "tailscale_7" {
+  title       = "7. Customize key expiration "
+  description = "Require users to rotate keys by re-authenticating their devices to the network regularly. Devices connect to your tailnet using a public key which expires automatically after a period of time, forcing keys to rotate."
+  sql         = query.tailscale_key_set_to_expire.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
