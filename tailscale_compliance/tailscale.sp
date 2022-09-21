@@ -24,13 +24,13 @@ benchmark "Tailscale" {
 }
 
 control "tailscale_1" {
-  title       = "1. Ensure multifactor authentication is enabled for all users in administrative roles"
-  description = "Enable multifactor authentication for all users who are members of administrative roles in the Microsoft 365 tenant."
-  sql         = query.tailscale.sql
+  title       = "1. Upgrade Tailscale clients in a timely manner"
+  description = "Upgrade Tailscale clients regularly, in a timely manner. Tailscale frequently introduces new features and patches existing versions, including security patches."
+  sql         = query.tailscale_upgrade_clients_in_timely_manner.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 
-  /* tags = merge(local.tailscale_common_tags, {
-    cis_item_id = "1."
+  /*   tags = merge(local.tailscale_common_tags, {
+    cis_item_id = "1.1.1"
     cis_level   = "1"
     cis_type    = "automated"
     license     = "E3"
@@ -53,9 +53,9 @@ control "tailscale_3" {
 }
 
 control "tailscale_4" {
-  title       = "4. "
-  description = "Enable multifactor authentication for all users who are members of administrative roles in the Microsoft 365 tenant."
-  sql         = query.tailscale.sql
+  title       = "4. Enable device authorization"
+  description = "New devices can be manually reviewed and approved by an Admin before they can join the network. This can be used to ensure only trusted devices, such as workplace-managed laptops and phones, can access a network.."
+  sql         = query.tailscale_enable_device_authorization.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
 
