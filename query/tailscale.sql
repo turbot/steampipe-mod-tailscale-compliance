@@ -1,4 +1,4 @@
 select
   *
 from
-  tailscale_acl_acl
+  tailscale_acl_acl;
