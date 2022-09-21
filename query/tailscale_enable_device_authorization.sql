@@ -14,4 +14,3 @@ select
   user
 from
   tailscale_device;
-  
