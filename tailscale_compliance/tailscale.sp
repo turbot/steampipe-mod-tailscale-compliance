@@ -15,7 +15,8 @@ benchmark "Tailscale" {
     control.tailscale_2,
     control.tailscale_3,
     control.tailscale_4,
-    control.tailscale_5
+    control.tailscale_5,
+    control.tailscale_6
   ]
 
   tags = merge(local.tailscale_common_tags, {
@@ -54,14 +55,28 @@ control "tailscale_3" {
 
 control "tailscale_4" {
   title       = "4. Enable device authorization"
-  description = "New devices can be manually reviewed and approved by an Admin before they can join the network. This can be used to ensure only trusted devices, such as workplace-managed laptops and phones, can access a network.."
+  description = "New devices can be manually reviewed and approved by an Admin before they can join the network. This can be used to ensure only trusted devices, such as workplace-managed laptops and phones, can access a network."
   sql         = query.tailscale_enable_device_authorization.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
 
 control "tailscale_5" {
-  title       = "5. "
-  description = "Enable multifactor authentication for all users who are members of administrative roles in the Microsoft 365 tenant."
+  title       = "5. Use groups in ACLs"
+  description = "Use tags to manage devices. Tags allows to define access to devices based on purpose, rather than based on owner. ."
+  sql         = query.tailscale.sql
+  // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
+}
+
+control "tailscale_6" {
+  title       = "6. Assign admin roles."
+  description = "Assign user roles for managing Tailscale as appropriate, based on job function and for separation of duties. Tailscale provides multiple user roles that restrict who can modify your tailnet’s configurations."
+  sql         = query.tailscale_assign_admin_roles.sql
+  // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
+}
+
+control "tailscale_7" {
+  title       = "7. Use groups in ACLs"
+  description = "Use tags to manage devices. Tags allows to define access to devices based on purpose, rather than based on owner. ."
   sql         = query.tailscale.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
