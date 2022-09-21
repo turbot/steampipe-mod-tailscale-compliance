@@ -1,25 +1,23 @@
 // Benchmarks and controls for specific services should override the "service" tag
 locals {
-  microsoft_365_compliance_common_tags = {
+  tailscale_compliance__common_tags = {
     category = "Compliance"
-    plugin   = "azure"
-    service  = "Azure"
+    plugin   = "tailscale"
+    service  = "Tailscale"
   }
 }
 
-mod "microsoft_365_foundations_compliance" {
+mod "tailscale_compliance" {
   # hub metadata
-  title         = "Microsoft 365 Foundations Compliance"
-  description   = "Run individual configuration, compliance and security controls or full compliance benchmarks for Microsoft Office 365 Foundations."
+  title         = "Tailscale Compliance"
+  description   = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
   color         = "#00A4EF"
   documentation = file("./docs/index.md")
-  # icon          = "/images/mods/turbot/microsoft-365-compliance.svg"
-  categories = ["azure", "cis", "compliance", "security"]
+  categories = ["tailscale", "compliance", "security"]
 
   opengraph {
-    title       = "Steampipe Mod for Microsoft 365 Compliance"
-    description = "Run individual configuration, compliance and security controls or full compliance benchmarks for Microsoft Office 365 Foundations."
-    image       = "/images/mods/turbot/microsoft-365-social-graphic.png"
+    title       = "Steampipe Mod for Tailscale Compliance"
+    description = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
   }
 
   # require {
