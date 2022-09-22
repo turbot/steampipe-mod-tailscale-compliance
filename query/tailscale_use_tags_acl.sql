@@ -2,11 +2,11 @@ select
   -- Required Columns
     tailnet_name as resource,
   case
-    when tag is not null then 'ok'
+    when acl_tag_owners is not null then 'ok'
     else 'alarm'
   end as status,
   case
-    when tag is not null then 'Tailnet use acl tags.'
+    when acl_tag_owners is not null then 'Tailnet use acl tags.'
     else 'Tailnet does not use acl tags.'
   end as reason,
   -- Additional Dimensions
