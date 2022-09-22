@@ -18,6 +18,8 @@ benchmark "Tailscale" {
     control.tailscale_5,
     control.tailscale_6,
     control.tailscale_7,
+    control.tailscale_8,
+    control.tailscale_9
   ]
 
   tags = merge(local.tailscale_common_tags, {
@@ -85,6 +87,6 @@ control "tailscale_7" {
 control "tailscale_9" {
   title       = "9. Use tags in ACLs"
   description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
-  sql         = query.tailscale_key_set_to_expire.sql
+  sql         = query.tailscale_use_tags_acl.sql
   // documentation = file("./cis_v140/docs/cis_v140_1_1_1.md")
 }
