@@ -38,6 +38,7 @@ control "tailscale_1" {
   sql         = query.tailscale_upgrade_clients_in_timely_manner.sql
 }
 
+// steampipe check control.tailscale_2 --var 'api_key_id'="kFXfcN2CNTRL"
 control "tailscale_2" {
   title       = "Remove unused API keys"
   description = "Regularly remove API keys that are no longer needed for your network.This prevents leaked keys being used to add unauthorized users or devices to your network."
