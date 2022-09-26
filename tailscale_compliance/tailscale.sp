@@ -11,20 +11,20 @@ variable "api_key_id" {
   default     = "kFXfcN2CNTRL"
 }
 
-benchmark "Tailscale" {
+benchmark "tailscale" {
   title       = "Tailscale Best Practices"
   description = "Tailscale has many security features you can use to increase your network security. This page provides best practices for using these features to harden your Tailscale deployment."
 
   children = [
-    control.tailscale_1,
-    control.tailscale_2,
-    control.tailscale_3,
-    control.tailscale_4,
-    control.tailscale_5,
-    control.tailscale_6,
-    control.tailscale_7,
-    control.tailscale_8,
-    control.tailscale_9
+    control.upgrade_clients_in_timely_manner,
+    control.remove_unused_api_key_ids,
+    control.use_check_mode,
+    control.enable_device_authorization,
+    control.use_groups_acl,
+    control.assign_admin_roles,
+    control.key_set_to_expire,
+    control.protect_network_boundary,
+    control.use_tags_acl
   ]
 
   tags = merge(local.tailscale_common_tags, {
