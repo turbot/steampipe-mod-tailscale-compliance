@@ -19,10 +19,4 @@ mod "tailscale_compliance" {
     title       = "Steampipe Mod for Tailscale Compliance"
     description = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
   }
-
-  # require {
-  #   plugin "azuread" {
-  #     version = "0.7.0"
-  #   }
-  # }
 }
