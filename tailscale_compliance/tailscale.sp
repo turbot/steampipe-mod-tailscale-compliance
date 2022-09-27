@@ -16,15 +16,15 @@ benchmark "tailscale" {
   description = "Tailscale has many security features you can use to increase your network security. This page provides best practices for using these features to harden your Tailscale deployment."
 
   children = [
-    control.tailscale_upgrade_clients_in_timely_manner,
-    control.tailscale_unused_api_key_id_removed,
-    control.tailscale_check_mode_enabled,
+    control.tailscale_tailnet_acl_groups_used,
+    control.tailscale_tailnet_acl_tags_used,
+    control.tailscale_acl_ssh_admin_roles_assigned,
+    control.tailscale_acl_ssh_check_mode_enabled,
     control.tailscale_device_authorization_enabled,
-    control.tailscale_acl_groups_used,
-    control.tailscale_admin_roles_assigned,
-    control.tailscale_key_set_to_expire,
-    control.tailscale_network_boundary_protected,
-    control.tailscale_acl_tags_used
+    control.tailscale_device_key_expire,
+    control.tailscale_device_network_boundary_protected,
+    control.tailscale_tailnet_key_unused,
+    control.tailscale_device_upgrade_clients_in_timely_manner
   ]
 
   tags = merge(local.tailscale_common_tags, {
@@ -32,7 +32,7 @@ benchmark "tailscale" {
   })
 }
 
-control "tailscale_upgrade_clients_in_timely_manner" {
+control "tailscale_device_upgrade_clients_in_timely_manner" {
   title       = "Upgrade Tailscale clients in a timely manner"
   description = "Upgrade Tailscale clients regularly, in a timely manner. Tailscale frequently introduces new features and patches existing versions, including security patches."
   sql  =<<-EOT
@@ -55,7 +55,7 @@ control "tailscale_upgrade_clients_in_timely_manner" {
   EOT
 }
 
-control "tailscale_unused_api_key_id_removed" {
+control "tailscale_tailnet_key_unused" {
   title       = "Remove unused API keys"
   description = "Regularly remove API keys that are no longer needed for your network.This prevents leaked keys being used to add unauthorized users or devices to your network."
   sql = <<-EOT
@@ -84,7 +84,7 @@ control "tailscale_unused_api_key_id_removed" {
   }
 }
 
-control "tailscale_check_mode_enabled" {
+control "tailscale_acl_ssh_check_mode_enabled" {
   title       = "Use check mode for tailscale SSH"
   description = "Verify high-risk Tailscale SSH connections with check mode."
   sql = <<-EOT
@@ -130,7 +130,7 @@ control "tailscale_device_authorization_enabled" {
   EOT
 }
 
-control "tailscale_acl_groups_used" {
+control "tailscale_tailnet_acl_groups_used" {
   title       = "Use groups in ACLs"
   description = "Use tags to manage devices. Tags allows to define access to devices based on purpose, rather than based on owner. ."
   sql =<<-EOT
@@ -152,7 +152,7 @@ control "tailscale_acl_groups_used" {
   EOT
 }
 
-control "tailscale_admin_roles_assigned" {
+control "tailscale_acl_ssh_admin_roles_assigned" {
   title       = "Assign admin roles"
   description = "Assign user roles for managing Tailscale as appropriate, based on job function and for separation of duties. Tailscale provides multiple user roles that restrict who can modify your tailnet’s configurations."
   sql  =<<-EOT
@@ -175,7 +175,7 @@ control "tailscale_admin_roles_assigned" {
   EOT
 }
 
-control "tailscale_key_set_to_expire" {
+control "tailscale_device_key_expire" {
   title       = "Customize key expiration"
   description = "Require users to rotate keys by re-authenticating their devices to the network regularly. Devices connect to your tailnet using a public key which expires automatically after a period of time, forcing keys to rotate."
   sql =<<-EOT
@@ -198,7 +198,7 @@ control "tailscale_key_set_to_expire" {
   EOT
 }
 
-control "tailscale_network_boundary_protected" {
+control "tailscale_device_network_boundary_protected" {
   title       = "Protect your network boundary"
   description = "Restrict access to your private network, e.g., using a firewall. Tailscale allows you to easily connect your devices no matter their local area network, and ensures that traffic between your devices is end-to-end encrypted."
   sql =<<-EOT
@@ -221,7 +221,7 @@ control "tailscale_network_boundary_protected" {
 EOT
 }
 
-control "tailscale_acl_tags_used" {
+control "tailscale_tailnet_acl_tags_used" {
   title       = "Use tags in ACLs"
   description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
   sql =<<-EOT

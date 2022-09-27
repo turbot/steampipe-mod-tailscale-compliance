@@ -11,7 +11,7 @@ mod "tailscale_compliance" {
   # hub metadata
   title         = "Tailscale Compliance"
   description   = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
-  color         = "#00A4EF"
+  color         = "#000000"
   documentation = file("./docs/index.md")
   categories = ["tailscale", "compliance", "security"]
 

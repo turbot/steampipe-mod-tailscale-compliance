@@ -3,11 +3,11 @@ Run individual controls or full compliance benchmarks across all of your Tailsca
 
 Run checks in a dashboard:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/tailscale_mr/docs/tailscale_compliance_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_dashboard.png)
 
 Or in a terminal:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/tailscale_mr/docs/tailscale_compliance_mod_terminal.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_mod_terminal.png)
 
 ## Getting started
 
@@ -20,7 +20,7 @@ brew tap turbot/tap
 brew install steampipe
 ```
 
-Install the AWS plugin with [Steampipe](https://steampipe.io):
+Install the tailscale plugin with [Steampipe](https://steampipe.io):
 
 Clone:
 
