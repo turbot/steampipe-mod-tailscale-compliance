@@ -3,11 +3,11 @@ Run individual controls or full compliance benchmarks across all of your Tailsca
 
 Run checks in a dashboard:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/tailscale_mr/docs/tailscale_compliance_dashboard.png)
 
 Or in a terminal:
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-tags/main/docs/aws_tags_mod_terminal.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/tailscale_mr/docs/tailscale_compliance_mod_terminal.png)
 
 ## Getting started
 

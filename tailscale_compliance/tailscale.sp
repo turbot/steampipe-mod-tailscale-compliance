@@ -17,14 +17,14 @@ benchmark "tailscale" {
 
   children = [
     control.tailscale_upgrade_clients_in_timely_manner,
-    control.tailscale_remove_unused_api_key_ids,
-    control.tailscale_use_check_mode,
-    control.tailscale_enable_device_authorization,
-    control.tailscale_use_groups_acl,
-    control.tailscale_assign_admin_roles,
+    control.tailscale_unused_api_key_id_removed,
+    control.tailscale_check_mode_enabled,
+    control.tailscale_device_authorization_enabled,
+    control.tailscale_acl_groups_used,
+    control.tailscale_admin_roles_assigned,
     control.tailscale_key_set_to_expire,
-    control.tailscale_protect_network_boundary,
-    control.tailscale_use_tags_acl
+    control.tailscale_network_boundary_protected,
+    control.tailscale_acl_tags_used
   ]
 
   tags = merge(local.tailscale_common_tags, {
@@ -55,7 +55,7 @@ control "tailscale_upgrade_clients_in_timely_manner" {
   EOT
 }
 
-control "tailscale_remove_unused_api_key_ids" {
+control "tailscale_unused_api_key_id_removed" {
   title       = "Remove unused API keys"
   description = "Regularly remove API keys that are no longer needed for your network.This prevents leaked keys being used to add unauthorized users or devices to your network."
   sql = <<-EOT
@@ -84,7 +84,7 @@ control "tailscale_remove_unused_api_key_ids" {
   }
 }
 
-control "tailscale_use_check_mode" {
+control "tailscale_check_mode_enabled" {
   title       = "Use check mode for tailscale SSH"
   description = "Verify high-risk Tailscale SSH connections with check mode."
   sql = <<-EOT
@@ -107,7 +107,7 @@ control "tailscale_use_check_mode" {
   EOT
 }
 
-control "tailscale_enable_device_authorization" {
+control "tailscale_device_authorization_enabled" {
   title       = "Enable device authorization"
   description = "New devices can be manually reviewed and approved by an Admin before they can join the network. This can be used to ensure only trusted devices, such as workplace-managed laptops and phones, can access a network."
   sql =<<-EOT
@@ -130,7 +130,7 @@ control "tailscale_enable_device_authorization" {
   EOT
 }
 
-control "tailscale_use_groups_acl" {
+control "tailscale_acl_groups_used" {
   title       = "Use groups in ACLs"
   description = "Use tags to manage devices. Tags allows to define access to devices based on purpose, rather than based on owner. ."
   sql =<<-EOT
@@ -152,7 +152,7 @@ control "tailscale_use_groups_acl" {
   EOT
 }
 
-control "tailscale_assign_admin_roles" {
+control "tailscale_admin_roles_assigned" {
   title       = "Assign admin roles"
   description = "Assign user roles for managing Tailscale as appropriate, based on job function and for separation of duties. Tailscale provides multiple user roles that restrict who can modify your tailnet’s configurations."
   sql  =<<-EOT
@@ -198,7 +198,7 @@ control "tailscale_key_set_to_expire" {
   EOT
 }
 
-control "tailscale_protect_network_boundary" {
+control "tailscale_network_boundary_protected" {
   title       = "Protect your network boundary"
   description = "Restrict access to your private network, e.g., using a firewall. Tailscale allows you to easily connect your devices no matter their local area network, and ensures that traffic between your devices is end-to-end encrypted."
   sql =<<-EOT
@@ -221,7 +221,7 @@ control "tailscale_protect_network_boundary" {
 EOT
 }
 
-control "tailscale_use_tags_acl" {
+control "tailscale_acl_tags_used" {
   title       = "Use tags in ACLs"
   description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
   sql =<<-EOT
