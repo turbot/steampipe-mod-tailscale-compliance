@@ -6,9 +6,9 @@ repository: "https://github.com/turbot/steampipe-mod-tailscale-compliance"
 
 Run individual configuration, compliance and security controls or full compliance benchmarks across all your Tailscale resources.
 
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_tailscale_best_practices_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliances_mod_terminal.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/security_best_practices_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/security_best_practices_tailscale_security_best_practices_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/ security_best_practices_mod_terminal.png" width="50%" type="thumbnail"/>
 
 ## References
 
