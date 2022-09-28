@@ -5,9 +5,8 @@ locals {
 }
 
 variable "api_key_id" {
-  // type        = array
   description = "API Key ID for the tailnet key."
-  default     = ["kFXfcN2CNTRL" , "kFXfcN2CNTRJ"]
+  default     = ["fakeapikey1" , "fakeapikey2"]
 }
 
 benchmark "security_best_practices" {
@@ -73,18 +72,32 @@ control "tailscale_acl_ssh_admin_roles_assigned" {
   title       = "Assign admin roles"
   description = "Assign user roles for managing Tailscale as appropriate, based on job function and for separation of duties. Tailscale provides multiple user roles that restrict who can modify your tailnet's configurations."
   sql  = <<-EOT
+    with  tailscale_users as (
+      select
+        tailnet_name,
+        count(*) as tailnet_number
+      from
+        tailscale_acl_ssh
+      where
+        users ?| array['group:admin']and users ?| array['group:itadmin']and users ?| array['group:networkadmin']and users ?| array['group:auditor']
+      group by
+        tailnet_name
+    )
     select
-      tailnet_name as resource,
+      t.tailnet_name as resource,
       case
-        when users ?| array['group:admin','group:itadmin','group:networkadmin','group:auditor'] then 'ok'
+        when tu.tailnet_number > 0 then 'ok'
         else 'alarm'
       end as status,
       case
-        when users ?| array['group:admin','group:itadmin','group:networkadmin','group:auditor'] then tailnet_name || ' has admin roles assigned.'
-        else tailnet_name || ' does not have admin roles assigned.'
+        when tu.tailnet_number > 0 then t.tailnet_name || ' has admin roles assigned.'
+        else t.tailnet_name || ' does not have all admin roles assigned.'
       end as reason
     from
-      tailscale_acl_ssh;
+      tailscale_acl_ssh as t
+      left join tailscale_users as tu on t.tailnet_name = tu.tailnet_name
+    group by
+      tu.tailnet_number , t.tailnet_name;
   EOT
 }
 
@@ -92,18 +105,32 @@ control "tailscale_acl_ssh_check_mode_enabled" {
   title       = "Use check mode for tailscale SSH"
   description = "Verify high-risk Tailscale SSH connections with check mode."
   sql = <<-EOT
+    with  tailscale_users as (
+      select
+        tailnet_name,
+        count(*) as tailnet_number
+      from
+        tailscale_acl_ssh
+      where
+        users ?| array['root'] and action = 'check' and check_period is not null
+      group by
+        tailnet_name
+    )
     select
-      tailnet_name as resource,
+      t.tailnet_name as resource,
       case
-        when action = 'check' and check_period is NOT NULL then 'ok'
+        when tu.tailnet_number > 0 then 'ok'
         else 'alarm'
       end as status,
       case
-        when  action = 'check' and check_period is NOT NULL then 'Check mode is enabled for tailscale SSH.'
-        else 'Check mode is disabled for tailscale SSH.'
+        when tu.tailnet_number > 0 then t.tailnet_name || ' has check period enabled.'
+        else t.tailnet_name || ' does not have check period enabled.'
       end as reason
     from
-      tailscale_acl_ssh;
+      tailscale_acl_ssh as t
+      left join tailscale_users as tu on t.tailnet_name = tu.tailnet_name
+    group by
+      tu.tailnet_number , t.tailnet_name;
   EOT
 }
 
@@ -164,7 +191,7 @@ control "tailscale_device_network_boundary_protected" {
       tailnet_name
     from
       tailscale_device;
-EOT
+  EOT
 }
 
 control "tailscale_tailnet_key_unused" {
@@ -173,19 +200,18 @@ control "tailscale_tailnet_key_unused" {
   sql = <<-EOT
     select
       id as resource,
-      case
-        when expires < now() then 'alarm'
-        else 'ok'
+      case when expires < now() then 'alarm'
+      else 'ok'
       end as status,
-      case
-        when expires < now() then title || ' is unused.'
-        else title || ' does not have unused API key.'
+      case when expires < now() then
+        id || ' expired on ' || to_char(expires, 'DD-Mon-YYYY') || '.'
+      else
+        id || ' valid until ' || to_char(expires, 'DD-Mon-YYYY')  || '.'
       end as reason,
       key
     from
       tailscale_tailnet_key
-    where
-      id = $1
+    where id = any ( ARRAY ['kUtiHS4CNTRL'] )
   EOT
 
   param "api_key_id" {
