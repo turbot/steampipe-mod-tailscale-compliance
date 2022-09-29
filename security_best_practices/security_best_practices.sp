@@ -11,7 +11,7 @@ variable "api_key_id" {
 
 benchmark "security_best_practices" {
   title       = "Tailscale Security Best Practices"
-  description = "Tailscale has many security features you can use to increase your network security. This page provides best practices for using these features to harden your Tailscale deployment."
+  description = "Tailscale has many security features you can use to increase your network security. This benchmark provides best practices for using these features to harden your Tailscale deployment."
 
   children = [
     control.tailscale_tailnet_acl_groups_used,
