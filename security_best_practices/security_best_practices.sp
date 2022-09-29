@@ -10,9 +10,9 @@ variable "api_key_id" {
 }
 
 benchmark "security_best_practices" {
-  title       = "Tailscale Security Best Practices"
-  description = "Tailscale has many security features you can use to increase your network security. This benchmark provides best practices for using these features to harden your Tailscale deployment."
-
+  title         = "Tailscale Security Best Practices"
+  description   = "Tailscale has many security features you can use to increase your network security. This benchmark provides best practices for using these features to harden your Tailscale deployment."
+  documentation = file("./security_best_practices/docs/security_best_practices.md")
   children = [
     control.tailscale_acl_ssh_admin_roles_assigned,
     control.tailscale_acl_ssh_check_mode_enabled,
@@ -233,7 +233,8 @@ control "tailscale_tailnet_key_unused" {
       tailnet_name
     from
       tailscale_tailnet_key
-    where id = any (($1)::text[]) ;
+    where
+      id = any (($1)::text[]);
   EOT
 
   param "api_key_id" {
