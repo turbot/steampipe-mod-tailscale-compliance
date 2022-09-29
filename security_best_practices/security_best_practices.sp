@@ -6,7 +6,7 @@ locals {
 
 variable "api_key_id" {
   description = "API Key ID for the tailnet key."
-  default     = ["fakeapikey1" , "fakeapikey2"]
+  default     = ["k6i2kX7CNTRL", "k6i2kX7CNTRLJHKJ"]
 }
 
 benchmark "security_best_practices" {
@@ -14,58 +14,20 @@ benchmark "security_best_practices" {
   description = "Tailscale has many security features you can use to increase your network security. This benchmark provides best practices for using these features to harden your Tailscale deployment."
 
   children = [
-    control.tailscale_tailnet_acl_groups_used,
-    control.tailscale_tailnet_acl_tags_used,
     control.tailscale_acl_ssh_admin_roles_assigned,
     control.tailscale_acl_ssh_check_mode_enabled,
     control.tailscale_device_authorization_enabled,
     control.tailscale_device_key_expire,
     control.tailscale_device_network_boundary_protected,
+    control.tailscale_device_upgrade_clients_in_timely_manner,
+    control.tailscale_tailnet_acl_groups_used,
+    control.tailscale_tailnet_acl_tags_used,
     control.tailscale_tailnet_key_unused,
-    control.tailscale_device_upgrade_clients_in_timely_manner
   ]
 
   tags = merge(local.tailscale_common_tags, {
     type = "Benchmark"
   })
-}
-
-control "tailscale_tailnet_acl_groups_used" {
-  title       = "Use groups in ACLs"
-  description = "Using groups allows identities to be controlled based on job function. If someone leaves an organization or changes roles, you can adjust the group membership rather than update all of their ACLs."
-  sql = <<-EOT
-    select
-      tailnet_name as resource,
-      case
-        when acl_groups is not null then 'ok'
-        else 'alarm'
-      end as status,
-      case
-        when acl_groups is not null then tailnet_name || ' uses ACL group.'
-        else tailnet_name || ' does not use ACL group.'
-      end as reason
-    from
-      tailscale_tailnet;
-  EOT
-}
-
-control "tailscale_tailnet_acl_tags_used" {
-  title       = "Use tags in ACLs"
-  description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
-  sql = <<-EOT
-    select
-      tailnet_name as resource,
-      case
-        when acl_tag_owners is not null then 'ok'
-        else 'alarm'
-      end as status,
-      case
-        when acl_tag_owners is not null then tailnet_name || ' uses ACL tags.'
-        else tailnet_name || ' does not use ACL tags.'
-      end as reason
-    from
-      tailscale_tailnet;
-  EOT
 }
 
 control "tailscale_acl_ssh_admin_roles_assigned" {
@@ -90,14 +52,15 @@ control "tailscale_acl_ssh_admin_roles_assigned" {
         else 'alarm'
       end as status,
       case
-        when tu.tailnet_number > 0 then t.tailnet_name || ' has admin roles assigned.'
+        when tu.tailnet_number > 0 then t.tailnet_name || ' has all admin roles assigned.'
         else t.tailnet_name || ' does not have all admin roles assigned.'
       end as reason
     from
       tailscale_acl_ssh as t
       left join tailscale_users as tu on t.tailnet_name = tu.tailnet_name
     group by
-      tu.tailnet_number , t.tailnet_name;
+      tu.tailnet_number,
+      t.tailnet_name;
   EOT
 }
 
@@ -123,14 +86,15 @@ control "tailscale_acl_ssh_check_mode_enabled" {
         else 'alarm'
       end as status,
       case
-        when tu.tailnet_number > 0 then t.tailnet_name || ' has check period enabled.'
-        else t.tailnet_name || ' does not have check period enabled.'
+        when tu.tailnet_number > 0 then t.tailnet_name || ' has check mode enabled.'
+        else t.tailnet_name || ' has check mode disabled.'
       end as reason
     from
       tailscale_acl_ssh as t
       left join tailscale_users as tu on t.tailnet_name = tu.tailnet_name
     group by
-      tu.tailnet_number , t.tailnet_name;
+      tu.tailnet_number,
+      t.tailnet_name;
   EOT
 }
 
@@ -146,7 +110,7 @@ control "tailscale_device_authorization_enabled" {
       end as status,
       case
         when authorized = true then name || ' is authorized.'
-        else name || ' is not authorized.'
+        else name || ' is unauthorized.'
       end as reason,
       tailnet_name
     from
@@ -194,31 +158,6 @@ control "tailscale_device_network_boundary_protected" {
   EOT
 }
 
-control "tailscale_tailnet_key_unused" {
-  title       = "Remove unused API keys"
-  description = "Regularly remove API keys that are no longer needed for your network.This prevents leaked keys being used to add unauthorized users or devices to your network."
-  sql = <<-EOT
-    select
-      id as resource,
-      case when expires < now() then 'alarm'
-      else 'ok'
-      end as status,
-      case when expires < now() then
-        id || ' expired on ' || to_char(expires, 'DD-Mon-YYYY') || '.'
-      else
-        id || ' valid until ' || to_char(expires, 'DD-Mon-YYYY')  || '.'
-      end as reason,
-      tailnet_name
-    from
-      tailscale_tailnet_key
-    where id = any ( ARRAY ['fakeapikey1'] )
-  EOT
-
-  param "api_key_id" {
-    default = var.api_key_id
-  }
-}
-
 control "tailscale_device_upgrade_clients_in_timely_manner" {
   title       = "Upgrade Tailscale clients in a timely manner"
   description = "Upgrade Tailscale clients regularly, in a timely manner. Tailscale frequently introduces new features and patches existing versions, including security patches."
@@ -237,4 +176,67 @@ control "tailscale_device_upgrade_clients_in_timely_manner" {
     from
       tailscale_device;
   EOT
+}
+
+control "tailscale_tailnet_acl_groups_used" {
+  title       = "Use groups in ACLs"
+  description = "Using groups allows identities to be controlled based on job function. If someone leaves an organization or changes roles, you can adjust the group membership rather than update all of their ACLs."
+  sql = <<-EOT
+    select
+      tailnet_name as resource,
+      case
+        when acl_groups is not null then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when acl_groups is not null then tailnet_name || ' uses ACL group.'
+        else tailnet_name || ' does not use ACL group.'
+      end as reason
+    from
+      tailscale_tailnet;
+  EOT
+}
+
+control "tailscale_tailnet_acl_tags_used" {
+  title       = "Use tags in ACLs"
+  description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
+  sql = <<-EOT
+    select
+      tailnet_name as resource,
+      case
+        when acl_tag_owners is not null then 'ok'
+        else 'alarm'
+      end as status,
+      case
+        when acl_tag_owners is not null then tailnet_name || ' uses ACL tags.'
+        else tailnet_name || ' does not use ACL tags.'
+      end as reason
+    from
+      tailscale_tailnet;
+  EOT
+}
+
+control "tailscale_tailnet_key_unused" {
+  title       = "Remove unused API keys"
+  description = "Regularly remove API keys that are no longer needed for your network.This prevents leaked keys being used to add unauthorized users or devices to your network."
+  sql = <<-EOT
+    select
+      id as resource,
+      case
+        when expires < now() then 'alarm'
+        else 'ok'
+      end as status,
+      case
+        when expires < now() then id || ' expired on ' || to_char(expires, 'DD-Mon-YYYY') || '.'
+      else id || ' valid until ' || to_char(expires, 'DD-Mon-YYYY') || '.'
+      end as reason,
+      tailnet_name
+    from
+      tailscale_tailnet_key
+    where id = any (($1)::text[]) ;
+  EOT
+
+  param "api_key_id" {
+    default = var.api_key_id
+  }
 }

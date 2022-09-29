@@ -75,7 +75,6 @@ Several benchmarks have [input variables](https://steampipe.io/docs/using-steamp
 
 These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://steampipe.io/docs/using-steampipe/mod-variables#passing-input-variables).
 
-
 ## Contributing
 
 If you have an idea for additional controls or just want to help maintain and extend this mod ([or others](https://github.com/topics/steampipe-mod)) we would love you to join the community and start contributing.
