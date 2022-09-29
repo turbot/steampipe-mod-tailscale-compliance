@@ -6,7 +6,7 @@ locals {
 
 variable "api_key_id" {
   description = "API Key ID for the tailnet key."
-  default     = ["k6i2kX7CNTRL", "k6i2kX7CNTRLJHKJ"]
+  default     = ["fakeapikey1", "fakeapikey2"]
 }
 
 benchmark "security_best_practices" {
