@@ -6,7 +6,7 @@ locals {
 
 variable "api_key_id" {
   description = "API Key ID for the tailnet key."
-  default     = ["k6i2kX7CNTRL" , "fakeapikey2"]
+  default     = ["fakeapikey1" , "fakeapikey2"]
 }
 
 benchmark "security_best_practices" {
@@ -211,7 +211,7 @@ control "tailscale_tailnet_key_unused" {
       tailnet_name
     from
       tailscale_tailnet_key
-    where id = any ( ARRAY ['k6i2kX7CNTRL'] )
+    where id = any ( ARRAY ['fakeapikey1'] )
   EOT
 
   param "api_key_id" {
