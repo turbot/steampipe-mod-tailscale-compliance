@@ -61,13 +61,13 @@ steampipe check all
 Run a single benchmark:
 
 ```sh
-steampipe check benchmark.tailscale
+steampipe check benchmark.security_best_practices
 ```
 
 Run a specific control:
 
 ```sh
-steampipe check control.tailscale_enable_device_authorization
+steampipe check control.tailscale_device_authorization_enabled
 ```
 
 Different output formats are also available, for more information please see
