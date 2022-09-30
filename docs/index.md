@@ -90,20 +90,7 @@ This mod uses the credentials configured in the [Steampipe Tailscale plugin](htt
 
 ### Configuration
 
-Benchmarks have [input variables](https://steampipe.io/docs/using-steampipe/mod-variables) that can be configured to better match your environment and requirements. Each variable has a default defined in its source file, e.g., `security_best_practices/security_best_practices.sp`, but these can be overridden in several ways:
-
-- Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
-- Pass in a value on the command line:
-  ```sh
-  steampipe check benchmark.security_best_practices --var 'api_key_ids=["fakekey1"]'
-  ```
-- Set an environment variable:
-  ```sh
-  SP_VAR_api_key_ids='["fakekey1", "fakekey1"]' steampipe check benchmark.security_best_practices
-  ```
-  - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
-
-These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://steampipe.io/docs/using-steampipe/mod-variables#passing-input-variables).
+No extra configuration is required.
 
 ## Contributing
 

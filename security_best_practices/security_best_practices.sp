@@ -1,9 +1,3 @@
-variable "api_key_ids" {
-  type        = list(string)
-  default     = ["fakeapikey1", "fakeapikey2"]
-  description = "API Key ID for the tailnet key."
-}
-
 benchmark "security_best_practices" {
   title         = "Tailscale Security Best Practices"
   description   = "Tailscale has many security features you can use to increase your network security. This benchmark provides best practices for using these features to harden your Tailscale deployment."

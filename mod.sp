@@ -19,7 +19,7 @@ mod "tailscale_compliance" {
   opengraph {
     title       = "Steampipe Mod for Tailscale Compliance"
     description = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
-    image       = "/images/mods/turbot/tailscalecompliance-social-graphic.png"
+    image       = "/images/mods/turbot/tailscale-compliance-social-graphic.png"
   }
 
   require {
