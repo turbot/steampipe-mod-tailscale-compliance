@@ -1,1 +1,1 @@
-api_key_id = ["fakeapikey1" , "fakeapikey2"]
+api_key_ids = ["fakeapikey1", "fakeapikey2"]

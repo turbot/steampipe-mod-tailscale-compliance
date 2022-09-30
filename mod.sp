@@ -1,6 +1,6 @@
 // Benchmarks and controls for specific services should override the "service" tag
 locals {
-  tailscale_compliance__common_tags = {
+  tailscale_compliance_common_tags = {
     category = "Compliance"
     plugin   = "tailscale"
     service  = "Tailscale"
@@ -13,10 +13,19 @@ mod "tailscale_compliance" {
   description   = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
   color         = "#000000"
   documentation = file("./docs/index.md")
-  categories = ["tailscale", "compliance", "security"]
+  icon          = "/images/mods/turbot/tailscale-compliance.svg"
+  categories    = ["tailscale", "compliance", "security"]
 
   opengraph {
     title       = "Steampipe Mod for Tailscale Compliance"
     description = "Run individual configuration, compliance and security controls or full compliance benchmarks for Tailscale."
+    image       = "/images/mods/turbot/tailscalecompliance-social-graphic.png"
+  }
+
+  require {
+    steampipe = "0.16.3"
+    plugin "tailscale" {
+      version = "0.0.4"
+    }
   }
 }

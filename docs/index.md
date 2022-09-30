@@ -2,15 +2,19 @@
 repository: "https://github.com/turbot/steampipe-mod-tailscale-compliance"
 ---
 
-# Tailscale Compliance
+# Tailscale Compliance Mod
 
 Run individual configuration, compliance and security controls or full compliance benchmarks across all your Tailscale resources.
 
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/security_best_practices_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/security_best_practices_tailscale_security_best_practices_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/ security_best_practices_mod_terminal.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_security_best_practices.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_terminal.png" width="50%" type="thumbnail"/>
 
 ## References
+
+[Tailscale](https://tailscale.com/) is a VPN service that makes the devices and applications you own accessible anywhere in the world, securely and effortlessly. It enables encrypted point-to-point connections using the open source [WireGuard](https://www.wireguard.com/) protocol, which means only devices on your private network can communicate with each other.
+
+[Tailscale Security Best Practices](https://tailscale.com/kb/1196/security-hardening/) provides best practices for using these features to harden your Tailscale deployment.
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
@@ -18,6 +22,7 @@ Run individual configuration, compliance and security controls or full complianc
 
 ## Documentation
 - **[Benchmarks and controls →](https://hub.steampipe.io/mods/turbot/tailscale_compliance/controls)**
+- **[Named queries →](https://hub.steampipe.io/mods/turbot/tailscale_compliance/queries)**
 
 ## Getting started
 
@@ -28,6 +33,12 @@ Download and install Steampipe (https://steampipe.io/downloads). Or use Brew:
 ```sh
 brew tap turbot/tap
 brew install steampipe
+```
+
+Install the Tailscale plugin with [Steampipe](https://steampipe.io):
+
+```sh
+steampipe plugin install tailscale
 ```
 
 Clone:
@@ -67,18 +78,29 @@ steampipe check benchmark.security_best_practices
 Run a specific control:
 
 ```sh
-steampipe check control.tailscale_device_authorization_enabled
+steampipe check control.security_best_practices_device_authorization_enabled
 ```
 
 Different output formats are also available, for more information please see
 [Output Formats](https://steampipe.io/docs/reference/cli/check#output-formats).
 
+### Credentials
+
+This mod uses the credentials configured in the [Steampipe Tailscale plugin](https://hub.steampipe.io/plugins/turbot/tailscale).
+
 ### Configuration
 
-Several benchmarks have [input variables](https://steampipe.io/docs/using-steampipe/mod-variables) that can be configured to better match your environment and requirements. Each variable has a default defined in its source file, e.g., `controls/limit.sp`, but these can be overriden in several ways:
+Benchmarks have [input variables](https://steampipe.io/docs/using-steampipe/mod-variables) that can be configured to better match your environment and requirements. Each variable has a default defined in its source file, e.g., `security_best_practices/security_best_practices.sp`, but these can be overridden in several ways:
 
 - Copy and rename the `steampipe.spvars.example` file to `steampipe.spvars`, and then modify the variable values inside that file
 - Pass in a value on the command line:
+  ```sh
+  steampipe check benchmark.security_best_practices --var 'api_key_ids=["fakekey1"]'
+  ```
+- Set an environment variable:
+  ```sh
+  SP_VAR_api_key_ids='["fakekey1", "fakekey1"]' steampipe check benchmark.security_best_practices
+  ```
   - Note: When using environment variables, if the variable is defined in `steampipe.spvars` or passed in through the command line, either of those will take precedence over the environment variable value. For more information on variable definition precedence, please see the link below.
 
 These are only some of the ways you can set variables. For a full list, please see [Passing Input Variables](https://steampipe.io/docs/using-steampipe/mod-variables#passing-input-variables).
