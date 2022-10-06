@@ -6,7 +6,7 @@ benchmark "security_best_practices" {
     control.security_best_practices_acl_ssh_admin_roles_assigned,
     control.security_best_practices_acl_ssh_check_mode_enabled,
     control.security_best_practices_device_authorization_enabled,
-    control.security_best_practices_device_key_expire,
+    control.security_best_practices_device_node_key_expire,
     control.security_best_practices_device_network_boundary_protected,
     control.security_best_practices_device_upgrade_clients_in_timely_manner,
     control.security_best_practices_tailnet_acl_groups_used,
@@ -61,7 +61,7 @@ control "security_best_practices_acl_ssh_admin_roles_assigned" {
           case when not (role_agg ?| array['group:admin'])::boolean then 'Admin' end,
           case when not (role_agg ?| array['group:itadmin'])::boolean then 'IT Admin' end,
           case when not (role_agg ?| array['group:networkadmin'])::boolean then 'Network Admin' end,
-          case when not (role_agg ?| array['group:auditor'])::boolean then 'Auditor' end) || ' role assigned.'
+          case when not (role_agg ?| array['group:auditor'])::boolean then 'Auditor' end) || ' role(s) assigned.'
       end as reason,
       t.tailnet_name
     from
@@ -121,7 +121,7 @@ control "security_best_practices_device_authorization_enabled" {
   EOT
 }
 
-control "security_best_practices_device_key_expire" {
+control "security_best_practices_device_node_key_expire" {
   title       = "Customize node key expiration"
   description = "Require users to rotate keys by re-authenticating their devices to the network regularly. Devices connect to your tailnet using a public key which expires automatically after a period of time, forcing keys to rotate."
   sql = <<-EOT
@@ -221,17 +221,17 @@ control "security_best_practices_tailnet_acl_tags_used" {
   description = "Use tags to manage devices. Using tags allows you to define access to devices based on purpose, rather than based on owner."
   sql = <<-EOT
     select
-      tailnet_name as resource,
+      name as resource,
       case
-        when acl_tag_owners is not null then 'ok'
+        when tags is not null then 'ok'
         else 'alarm'
       end as status,
       case
-        when acl_tag_owners is not null then tailnet_name || ' uses ACL tags.'
-        else tailnet_name || ' does not use ACL tags.'
+        when tags is not null then name || ' uses ACL tags.'
+        else name || ' does not use ACL tags.'
       end as reason,
       tailnet_name
     from
-      tailscale_tailnet;
+      tailscale_device;
   EOT
 }

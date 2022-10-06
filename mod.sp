@@ -23,7 +23,6 @@ mod "tailscale_compliance" {
   }
 
   require {
-    steampipe = "0.16.3"
     plugin "tailscale" {
       version = "0.0.4"
     }
