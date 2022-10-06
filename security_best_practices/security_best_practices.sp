@@ -185,19 +185,34 @@ control "security_best_practices_tailnet_acl_groups_used" {
   title       = "Use groups in ACLs"
   description = "Using groups allows identities to be controlled based on job function. If someone leaves an organization or changes roles, you can adjust the group membership rather than update all of their ACLs."
   sql = <<-EOT
+    with group_names as (
+      select
+        string_agg(split_part(json_keys, ':', 2), ', ') as gn,
+        tailnet_name
+      from (
+        select
+          jsonb_object_keys(acl_groups) as json_keys,
+          tailnet_name
+        from
+          tailscale_tailnet
+      ) as a
+      group by
+        a.tailnet_name
+    )
     select
-      tailnet_name as resource,
+      t.tailnet_name as resource,
       case
         when acl_groups is not null then 'ok'
         else 'alarm'
       end as status,
       case
-        when acl_groups is not null then tailnet_name || ' uses ACL group.'
-        else tailnet_name || ' does not use ACL group.'
+        when acl_groups is not null then t.tailnet_name || ' uses ACL groups: ' || gn || '.'
+        else t.tailnet_name || ' does not use ACL groups.'
       end as reason,
-      tailnet_name
+      t.tailnet_name
     from
-      tailscale_tailnet;
+      tailscale_tailnet as t
+      left outer join group_names as g on g.tailnet_name = t.tailnet_name;
   EOT
 }
 
