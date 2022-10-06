@@ -7,7 +7,6 @@ benchmark "security_best_practices" {
     control.security_best_practices_acl_ssh_check_mode_enabled,
     control.security_best_practices_device_authorization_enabled,
     control.security_best_practices_device_node_key_expire,
-    control.security_best_practices_device_network_boundary_protected,
     control.security_best_practices_device_upgrade_clients_in_timely_manner,
     control.security_best_practices_tailnet_acl_groups_used,
     control.security_best_practices_tailnet_acl_tags_used
@@ -134,26 +133,6 @@ control "security_best_practices_device_node_key_expire" {
       case
         when key_expiry_disabled then name || ' has key expiration disabled.'
         else name || ' has key expiration enabled.'
-      end as reason,
-      tailnet_name
-    from
-      tailscale_device;
-  EOT
-}
-
-control "security_best_practices_device_network_boundary_protected" {
-  title       = "Protect your network boundary"
-  description = "Restrict access to your private network, e.g., using a firewall. Tailscale allows you to easily connect your devices no matter their local area network, and ensures that traffic between your devices is end-to-end encrypted."
-  sql = <<-EOT
-    select
-      id as resource,
-      case
-        when blocks_incoming_connections then 'ok'
-        else 'alarm'
-      end as status,
-      case
-        when blocks_incoming_connections then name || ' access restricted to private network.'
-        else name || ' access not restricted to private network.'
       end as reason,
       tailnet_name
     from
