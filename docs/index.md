@@ -1,15 +1,28 @@
-# Tailscale Compliance Mod for Steampipe
+---
+repository: "https://github.com/turbot/steampipe-mod-tailscale-compliance"
+---
 
-Run individual controls or full compliance benchmarks across all of your Tailscale resources using Steampipe.
+# Tailscale Compliance Mod
 
-Run checks in a dashboard:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/images/tailscale_compliance_security_best_practices_dashboard.png)
+Run individual configuration, compliance and security controls or full compliance benchmarks for `Security Best Practices` across all your Tailscale resources.
 
-Or in a terminal:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/images/tailscale_compliance_security_best_practices_console.png)
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_security_best_practices_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/tailscale_compliance_security_best_practices_console.png" width="50%" type="thumbnail"/>
 
-Includes support for:
-* [Tailscale Security Best Practices](https://hub.steampipe.io/mods/turbot/tailscale_compliance/controls/benchmark.security_best_practices)
+## References
+
+[Tailscale](https://tailscale.com/) is a VPN service that makes the devices and applications you own accessible anywhere in the world, securely and effortlessly. It enables encrypted point-to-point connections using the open source [WireGuard](https://www.wireguard.com/) protocol, which means only devices on your private network can communicate with each other.
+
+[Tailscale Security Best Practices](https://tailscale.com/kb/1196/security-hardening/) provides best practices for using these features to harden your Tailscale deployment.
+
+[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+
+[Steampipe Mods](https://steampipe.io/docs/reference/mod-resources#mod) are collections of `named queries`, and codified `controls` that can be used to test current configuration of your cloud resources against a desired configuration.
+
+## Documentation
+- **[Benchmarks and controls →](https://hub.steampipe.io/mods/turbot/tailscale_compliance/controls)**
+- **[Named queries →](https://hub.steampipe.io/mods/turbot/tailscale_compliance/queries)**
 
 ## Getting started
 
