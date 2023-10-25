@@ -24,7 +24,7 @@ mod "tailscale_compliance" {
 
   require {
     plugin "tailscale" {
-      version = "0.1.0"
+      min_version = "0.1.0"
     }
   }
 }
