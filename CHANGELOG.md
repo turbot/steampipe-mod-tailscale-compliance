@@ -1,3 +1,13 @@
+## v0.2 [2023-11-03]
+
+_Breaking changes_
+
+- Updated the plugin dependency section of the mod to use `min_version` instead of `version`. ([#9](https://github.com/turbot/steampipe-mod-tailscale-compliance/pull/9))
+
+_Bug fixes_
+
+- Fixed dashboard localhost URLs in README and index doc. ([#5](https://github.com/turbot/steampipe-mod-tailscale-compliance/pull/5))
+
 ## v0.1 [2022-10-07]
 
 _What's new?_
