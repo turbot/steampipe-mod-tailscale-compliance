@@ -6,17 +6,18 @@
 Run individual controls or full compliance benchmarks across all of your Tailscale resources using Steampipe.
 
 Run checks in a dashboard:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/images/tailscale_compliance_security_best_practices_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/add-new-checks/docs/images/tailscale_compliance_security_best_practices_dashboard.png)
 
 Or in a terminal:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/images/tailscale_compliance_security_best_practices_console.png)
-
-## Documentation
-- **[Benchmarks and controls →](https://hub.powerpipe.io/mods/turbot/tailscale_compliance/controls)**
-- **[Named queries →](https://hub.powerpipe.io/mods/turbot/tailscale_compliance/queries)**
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/add-new-checks/docs/images/tailscale_compliance_security_best_practices_console.png)
 
 Includes support for:
 * [Tailscale Security Best Practices](https://hub.steampipe.io/mods/turbot/tailscale_compliance/controls/benchmark.security_best_practices)
+
+## Documentation
+- **[Benchmarks and controls →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/tailscale_compliance/controls)**
+- **[Named queries →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/tailscale_compliance/queries)**
+
 
 ## Getting Started
 
@@ -43,7 +44,7 @@ Finally, install the mod:
 mkdir dashboards
 cd dashboards
 powerpipe mod init
-powerpipe mod install github.com/turbot/powerpipe-mod-tailscale-compliance
+powerpipe mod install github.com/turbot/steampipe-mod-tailscale-compliance
 ```
 
 ### Browsing Dashboards
