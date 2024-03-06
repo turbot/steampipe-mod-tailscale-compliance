@@ -1,23 +1,21 @@
 # Tailscale Compliance Mod for Powerpipe
 
 > [!IMPORTANT]
-> Steampipe mods are [migrating to Powerpipe format](https://powerpipe.io) to gain new features. This mod currently works with both Steampipe and Powerpipe, but will only support Powerpipe from v1.x onward.
+> [Powerpipe](https://powerpipe.io) is now the preferred way to run this mod! [Migrating from Steampipe →](https://powerpipe.io/blog/migrating-from-steampipe)
+>
+> All v0.x versions of this mod will work in both Steampipe and Powerpipe, but v1.0.0 onwards will be in Powerpipe format only.
 
 Run individual controls or full compliance benchmarks across all of your Tailscale resources using Steampipe.
 
 Run checks in a dashboard:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/add-new-checks/docs/images/tailscale_compliance_security_best_practices_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/images/tailscale_compliance_security_best_practices_dashboard.png)
 
 Or in a terminal:
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/add-new-checks/docs/images/tailscale_compliance_security_best_practices_console.png)
-
-Includes support for:
-* [Tailscale Security Best Practices](https://hub.steampipe.io/mods/turbot/tailscale_compliance/controls/benchmark.security_best_practices)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-tailscale-compliance/main/docs/images/tailscale_compliance_security_best_practices_console.png)
 
 ## Documentation
-- **[Benchmarks and controls →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/tailscale_compliance/controls)**
-- **[Named queries →](https://hub-powerpipe-io-git-development-turbot.vercel.app/mods/turbot/tailscale_compliance/queries)**
-
+- **[Benchmarks and controls →](https://hub.powerpipe.io/mods/turbot/tailscale_compliance/controls)**
+- **[Named queries →](https://hub.powerpipe.io/mods/turbot/tailscale_compliance/queries)**
 
 ## Getting Started
 
@@ -35,8 +33,6 @@ This mod also requires [Steampipe](https://steampipe.io) with the [Tailscale plu
 brew install turbot/tap/steampipe
 steampipe plugin install tailscale
 ```
-
-This mod uses the credentials configured in the [Steampipe Tailscale plugin](https://hub.steampipe.io/plugins/turbot/tailscale#configuration).
 
 Finally, install the mod:
 
